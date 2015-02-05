@@ -1,0 +1,7 @@
+(ns article-tag-checker.core-test
+  (:require [clojure.test :refer :all]
+            [article-tag-checker.core :refer :all]))
+
+(deftest a-test
+  (testing "FIXME, I fail."
+    (is (= 0 1))))
