@@ -1,14 +1,12 @@
 # article-tag-checker
 
-A Clojure library designed to ... well, that part is up to you.
+A program for scanning and analysing what HTML is in use in historic Guardian content and what is compatible with that produces from the new content production system (primarily content that has tags that are acceptable to Scribe)
 
 ## Usage
 
-FIXME
+TODO
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2015 the Guardian
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
