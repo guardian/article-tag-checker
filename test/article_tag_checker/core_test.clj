@@ -3,5 +3,5 @@
             [article-tag-checker.core :refer :all]))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (testing "tag extraction"
+    (is (= [:a] (extract_tags "<p>Hello <a href=\"/test\"></a></p>")))))
