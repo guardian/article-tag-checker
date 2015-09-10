@@ -4,4 +4,7 @@
 
 (deftest a-test
   (testing "tag extraction"
-    (is (= [:a] (extract_tags "<p>Hello <a href=\"/test\"></a></p>")))))
+    (let [tags (extract_tags "<p>Hello <a href=\"/test\"></a></p>")]
+    (and
+        (is (some #( = :a %) tags))
+        (is (some #( = :p %) tags))))))

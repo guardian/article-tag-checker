@@ -1,4 +1,5 @@
-(ns article-tag-checker.core)
+(ns article-tag-checker.core
+	(:require [hickory.core :as hickory]))
 
 (def valid-scribe-tags
 	[:code :strong :b :em :i :strike :a :ul :ol :li :blockquote :h2 :sub :sup])
@@ -8,7 +9,11 @@
 (def analysis (atom {}))
 
 (defn extract_tags [html_string]
-	[:a])
+	(->> (tree-seq #(not-empty (:content %)) :content (hickory/as-hickory (hickory/parse html_string)))
+		(filter #(= :element (:type %)))
+		(map :tag)
+		set
+		))
 
 (defn read_capi [from to]
 	)
