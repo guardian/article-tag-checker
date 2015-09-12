@@ -2,7 +2,8 @@
 	(:require [hickory.core :as hickory]
 		[clojure.set :as set-ops]
 		[clj-http.lite.client :as http]
-		[cheshire.core :as json]))
+		[cheshire.core :as json]
+		[article-tag-checker.consts :as consts]))
 
 (def standard-tags
 	#{:html :head :body})
@@ -70,7 +71,7 @@
 (defn get-article-content [start-time end-time]
 	(let [capi-host (System/getenv "CAPI_HOST")
 		api-key (System/getenv "API_KEY")
-		payload {:page-size "50"
+		payload {:page-size consts/default-page-size
 			:api-key api-key
 			:from-date start-time
 			:to-date end-time
@@ -84,6 +85,22 @@
 			:results
 			extract-api-urls)))
 
+(defn get-pages-for-query [start-time end-time]
+	(let [capi-host (System/getenv "CAPI_HOST")
+		api-key (System/getenv "API_KEY")
+		payload {:page-size consts/default-page-size
+			:api-key api-key
+			:from-date start-time
+			:to-date end-time
+			:tags "type/article"
+			}]
+		(-> (str "https://" capi-host "/search")
+			(http/get {:query-params payload})
+			:body
+			parse-json
+			:response
+			:pages
+			str)))
 
 (defn foo
   [x]
