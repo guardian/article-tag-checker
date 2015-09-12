@@ -64,8 +64,27 @@
 		extract-response
 		analyse-content))
 
+(defn extract-api-urls [api-results]
+	(map (fn [item] (:apiUrl item)) api-results))
+
+(defn get-article-content [start-time end-time]
+	(let [capi-host (System/getenv "CAPI_HOST")
+		api-key (System/getenv "API_KEY")
+		payload {:page-size "50"
+			:api-key api-key
+			:from-date start-time
+			:to-date end-time
+			:tags "type/article"
+			}]
+		(-> (str "https://" capi-host "/search")
+			(http/get {:query-params payload})
+			:body
+			parse-json
+			:response
+			:results
+			extract-api-urls)))
+
+
 (defn foo
   [x]
-  (->> (read-capi)
-  	(analyse-content)
-	(write-results)))
+  "hello")
