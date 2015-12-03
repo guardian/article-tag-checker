@@ -4,21 +4,17 @@
 		[clojure.string :as str-ops]
 		[clj-http.lite.client :as http]
 		[cheshire.core :as json]
-		[article-tag-checker.consts :as consts]))
+		[article-tag-checker.consts :as consts]
+		[article-tag-checker.scribe :as scribe]))
 
 (def standard-tags
 	#{:html :head :body})
-
-(def valid-scribe-tags
-	#{:code :strong :b :em :i :strike :a :ul :ol :li :blockquote :h2 :sub :sup :p :br})
-
-(def valid-scribe-attributes #{:a [:href] :blockquote :class})
 
 (def capi-host (System/getenv "CAPI_HOST"))
 
 (defn valid-flexible-content? [tag-set]
 	(set-ops/subset? tag-set
-		(set-ops/union valid-scribe-tags standard-tags)))
+		(set-ops/union scribe/valid-tags standard-tags)))
 
 (defn extract-tags [html-string]
 	(if (not (nil? html-string))
@@ -67,8 +63,8 @@
 		:url url}))
 
 
-(defn write-results [analysed-capi-results]
-	(spit "/tmp/article-analysis" analysed-capi-results))
+(defn write-results [filename analysed-capi-results]
+	(spit (str "/tmp/article-analysis/" filename) analysed-capi-results))
 
 (defn analyse-from-url [url]
 	(->> url

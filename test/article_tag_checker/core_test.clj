@@ -11,6 +11,6 @@
 
 (deftest content-checking
     (testing "valid tags"
-        (is (valid-flexible-content #{:p :a :b}))
+        (is (valid-flexible-content? #{:p :a :b}))
     (testing "invalid tags"
-        (is (not (valid-flexible-content #{:script}))))))
+        (is (not (valid-flexible-content? #{:script}))))))
